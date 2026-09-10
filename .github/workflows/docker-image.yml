@@ -26,4 +26,11 @@ jobs:
           context: .
           platforms: linux/arm64
           tags: dsh:arm64
-          push: false
+          outputs: type=docker,dest=/tmp/dsh-arm64.tar
+
+      - name: Upload Docker image
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsh-arm64
+          path: /tmp/dsh-arm64.tar
+          retention-days: 7
