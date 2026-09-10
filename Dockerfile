@@ -14,13 +14,14 @@
 # admin 变体预装最新 DSH（@next）到 /opt/dsh（即管理服务的安装目录，挂载空卷时自动填充、开箱即用）
 FROM node:24-slim AS dsh-builder
 ARG DEV_TOOLS=none
+ARG DSH_VERSION=0.1.5-alpha.1
 RUN apt-get update \
     && apt-get install -y --no-install-recommends python3 make g++ \
     && rm -rf /var/lib/apt/lists/* \
     && if [ "$DEV_TOOLS" = "admin" ]; then \
-         npm install -g --prefix /opt/dsh --no-audit --no-fund @deepseek-ai/dsh@next; \
+         npm install -g --prefix /opt/dsh --no-audit --no-fund @deepseek-ai/dsh@$DSH_VERSION; \
        else \
-         npm install -g --no-audit --no-fund @deepseek-ai/dsh@next; \
+         npm install -g --no-audit --no-fund @deepseek-ai/dsh@$DSH_VERSION; \
        fi \
     && mkdir -p /opt/dsh
 
