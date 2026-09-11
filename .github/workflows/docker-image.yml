@@ -20,6 +20,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # ARM64
       - name: Build ARM64 image
         uses: docker/build-push-action@v6
         with:
@@ -28,9 +29,25 @@ jobs:
           tags: dsh:arm64
           outputs: type=docker,dest=/tmp/dsh-arm64.tar
 
-      - name: Upload Docker image
+      - name: Upload ARM64 image
         uses: actions/upload-artifact@v4
         with:
           name: dsh-arm64
           path: /tmp/dsh-arm64.tar
+          retention-days: 7
+
+      # AMD64 / x86_64
+      - name: Build AMD64 image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          tags: dsh:amd64
+          outputs: type=docker,dest=/tmp/dsh-amd64.tar
+
+      - name: Upload AMD64 image
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsh-amd64
+          path: /tmp/dsh-amd64.tar
           retention-days: 7
