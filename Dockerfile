@@ -25,6 +25,34 @@ RUN apt-get update \
        fi \
     && mkdir -p /opt/dsh
 
+RUN apt-get install -y --no-install-recommends \
+        openssh-client \
+        git \
+        rsync \
+        curl \
+        wget \
+        ca-certificates \
+        jq \
+        ripgrep \
+        fd-find \
+        file \
+        tree \
+        less \
+        zip \
+        unzip \
+        tar \
+        gzip \
+        bzip2 \
+        xz-utils \
+        procps \
+        psmisc \
+        util-linux \
+        iproute2 \
+        iputils-ping \
+        dnsutils \
+        netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
 # ── 阶段 2：精简运行镜像 ───────────────────────────────────────────
 FROM node:24-slim
 WORKDIR /app
