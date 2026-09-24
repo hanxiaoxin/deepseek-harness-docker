@@ -25,8 +25,13 @@ RUN apt-get update \
        fi \
     && mkdir -p /opt/dsh
 
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         openssh-client \
+        sshpass \
+        expect \
+        sudo \
+        tmux \
         git \
         rsync \
         curl \
