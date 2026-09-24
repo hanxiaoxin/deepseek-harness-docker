@@ -25,6 +25,10 @@ RUN apt-get update \
        fi \
     && mkdir -p /opt/dsh
 
+# ── 阶段 2：精简运行镜像 ───────────────────────────────────────────
+FROM node:24-slim
+WORKDIR /app
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         openssh-client \
@@ -56,11 +60,8 @@ RUN apt-get update \
         iputils-ping \
         dnsutils \
         netcat-openbsd \
+    && ln -s /usr/bin/fdfind /usr/local/bin/fd \
     && rm -rf /var/lib/apt/lists/*
-
-# ── 阶段 2：精简运行镜像 ───────────────────────────────────────────
-FROM node:24-slim
-WORKDIR /app
 
 # 开发工具变体开关：none（默认，不装）| <tag 前缀>（如 devtools / devtools-min）
 # 构建时通过 --build-arg DEV_TOOLS=<前缀> 启用；各前缀要安装的工具由
